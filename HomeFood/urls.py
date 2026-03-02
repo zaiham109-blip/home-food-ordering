@@ -23,7 +23,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 # Nimeongeza register_user hapa kwenye import
-from food_app.views import (
+from HomeFood.food_app.views import (
     FoodListCreateAPIView,
     FoodRetrieveUpdateDestroyAPIView,
     OrderListCreateAPIView,

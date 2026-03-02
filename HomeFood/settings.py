@@ -1,6 +1,9 @@
 from pathlib import Path
 import os
-import dj_database_url
+try:
+    import dj_database_url
+except ImportError:
+    dj_database_url = None
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -32,7 +35,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders', 
-    'food_app',
+    'HomeFood.food_app',
 ]
 
 MIDDLEWARE = [
@@ -67,7 +70,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'HomeFood.wsgi.application'
 
 database_url = os.environ.get("DATABASE_URL")
-if database_url:
+if database_url and dj_database_url:
     DATABASES = {
         "default": dj_database_url.parse(
             database_url,
