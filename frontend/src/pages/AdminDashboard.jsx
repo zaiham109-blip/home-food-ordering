@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { FoodContext } from "../FoodContext";
 import TopSettingsBar from "../components/TopSettingsBar";
 import { useSettings } from "../SettingsContext";
+import { API_BASE_URL } from "../config";
 
 function AdminDashboard() {
   const navigate = useNavigate();
@@ -265,7 +266,7 @@ function AdminDashboard() {
                     const src = item?.image
                       ? String(item.image).startsWith("http")
                         ? item.image
-                        : `http://127.0.0.1:8000${item.image}`
+                        : `${API_BASE_URL}${item.image}`
                       : "https://via.placeholder.com/120x80?text=No+Image";
                     return (
                       <tr key={item.id}>

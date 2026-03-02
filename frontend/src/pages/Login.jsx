@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { FoodContext } from "../FoodContext";
 import TopSettingsBar from "../components/TopSettingsBar";
 import { useSettings } from "../SettingsContext";
+import { API_URL } from "../config";
 
 function Login() {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ function Login() {
     setMessageType("");
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/login/", {
+      const response = await fetch(`${API_URL}/login/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

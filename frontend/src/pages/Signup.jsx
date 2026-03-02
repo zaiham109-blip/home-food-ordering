@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import TopSettingsBar from "../components/TopSettingsBar";
 import { useSettings } from "../SettingsContext";
+import { API_URL } from "../config";
 
 function Signup() {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ function Signup() {
     setMessageType("");
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/register/", {
+      const response = await fetch(`${API_URL}/register/`, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { FoodContext } from "../FoodContext";
 import TopSettingsBar from "../components/TopSettingsBar";
 import { useSettings } from "../SettingsContext";
+import { API_BASE_URL } from "../config";
 
 function CustomerDashboard() {
   const navigate = useNavigate();
@@ -170,7 +171,7 @@ function CustomerDashboard() {
               const imageSrc = imageValue
                 ? String(imageValue).startsWith("http")
                   ? imageValue
-                  : `http://127.0.0.1:8000${imageValue}`
+                  : `${API_BASE_URL}${imageValue}`
                 : "https://via.placeholder.com/300x180?text=No+Image";
 
               return (
@@ -355,4 +356,3 @@ const styles = {
 };
 
 export default CustomerDashboard;
-
