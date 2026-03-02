@@ -2,9 +2,9 @@ services:
   - type: web
     name: home-food-api
     env: python
-    rootDir: .
-    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --no-input && python manage.py migrate --no-input
-    startCommand: gunicorn HomeFood.wsgi:application
+    rootDir: backend
+    buildCommand: bash build.sh
+    startCommand: bash start.sh
     envVars:
       - key: DEBUG
         value: "False"
