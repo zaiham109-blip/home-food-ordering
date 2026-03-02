@@ -1,9 +1,9 @@
 services:
   - type: web
     name: home-food-api
-    runtime: python
+    env: python
     rootDir: .
-    buildCommand: bash build.sh
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --no-input && python manage.py migrate --no-input
     startCommand: gunicorn HomeFood.wsgi:application
     envVars:
       - key: DEBUG
