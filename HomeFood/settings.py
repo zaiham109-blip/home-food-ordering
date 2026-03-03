@@ -119,12 +119,18 @@ if cors_allowed_origins_raw:
     CORS_ALLOW_ALL_ORIGINS = False
 else:
     CORS_ALLOW_ALL_ORIGINS = DEBUG
+    CORS_ALLOWED_ORIGINS = []
+
+# Ruhusu preview/prod deployments za Vercel bila kuongeza origin kila deploy.
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://.*\.vercel\.app$",
+]
 
 csrf_trusted_origins_raw = os.environ.get("CSRF_TRUSTED_ORIGINS", "")
 if csrf_trusted_origins_raw:
     CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in csrf_trusted_origins_raw.split(",") if origin.strip()]
 else:
-    CSRF_TRUSTED_ORIGINS = []
+    CSRF_TRUSTED_ORIGINS = ["https://*.vercel.app"]
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SESSION_COOKIE_SECURE = not DEBUG
