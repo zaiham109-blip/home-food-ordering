@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+from urllib.parse import urlparse
 try:
     import dj_database_url
 except ImportError:
@@ -113,10 +114,33 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 AUTH_USER_MODEL = 'food_app.User'
 
 # CORS / CSRF settings kwa ajili ya React
+def _normalize_origin(value):
+    origin = (value or "").strip()
+    if not origin:
+        return ""
+    if "://" not in origin:
+        origin = f"https://{origin}"
+    parsed = urlparse(origin)
+    if not parsed.scheme or not parsed.netloc:
+        return ""
+    return origin
+
+
+def _parse_origins(raw_value):
+    if not raw_value:
+        return []
+    normalized = []
+    for item in raw_value.split(","):
+        origin = _normalize_origin(item)
+        if origin:
+            normalized.append(origin)
+    return normalized
+
+
 cors_allowed_origins_raw = os.environ.get("CORS_ALLOWED_ORIGINS", "")
 cors_allow_all_origins = os.environ.get("CORS_ALLOW_ALL_ORIGINS", "True").lower() == "true"
 if cors_allowed_origins_raw:
-    CORS_ALLOWED_ORIGINS = [origin.strip() for origin in cors_allowed_origins_raw.split(",") if origin.strip()]
+    CORS_ALLOWED_ORIGINS = _parse_origins(cors_allowed_origins_raw)
     CORS_ALLOW_ALL_ORIGINS = cors_allow_all_origins
 else:
     CORS_ALLOW_ALL_ORIGINS = cors_allow_all_origins
@@ -129,7 +153,7 @@ CORS_ALLOWED_ORIGIN_REGEXES = [
 
 csrf_trusted_origins_raw = os.environ.get("CSRF_TRUSTED_ORIGINS", "")
 if csrf_trusted_origins_raw:
-    CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in csrf_trusted_origins_raw.split(",") if origin.strip()]
+    CSRF_TRUSTED_ORIGINS = _parse_origins(csrf_trusted_origins_raw)
 else:
     CSRF_TRUSTED_ORIGINS = ["https://*.vercel.app"]
 
