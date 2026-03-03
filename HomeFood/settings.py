@@ -114,11 +114,12 @@ AUTH_USER_MODEL = 'food_app.User'
 
 # CORS / CSRF settings kwa ajili ya React
 cors_allowed_origins_raw = os.environ.get("CORS_ALLOWED_ORIGINS", "")
+cors_allow_all_origins = os.environ.get("CORS_ALLOW_ALL_ORIGINS", "True").lower() == "true"
 if cors_allowed_origins_raw:
     CORS_ALLOWED_ORIGINS = [origin.strip() for origin in cors_allowed_origins_raw.split(",") if origin.strip()]
-    CORS_ALLOW_ALL_ORIGINS = False
+    CORS_ALLOW_ALL_ORIGINS = cors_allow_all_origins
 else:
-    CORS_ALLOW_ALL_ORIGINS = DEBUG
+    CORS_ALLOW_ALL_ORIGINS = cors_allow_all_origins
     CORS_ALLOWED_ORIGINS = []
 
 # Ruhusu preview/prod deployments za Vercel bila kuongeza origin kila deploy.
