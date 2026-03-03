@@ -51,7 +51,7 @@ function Signup() {
       setTimeout(() => navigate("/"), 1000);
     } catch (error) {
       console.error(error);
-      setMessage("Tatizo la mtandao. Hakikisha Django server iko ON.");
+      setMessage("Tatizo la mtandao. API haipatikani kwa sasa.");
       setMessageType("error");
       setLoading(false);
     }
